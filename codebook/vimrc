@@ -1,0 +1,17 @@
+set ru
+set nu
+set ai
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set autowrite
+set smartindent
+set mouse=a
+set showmode
+set showcmd
+set whichwrap+=<,>,[,]
+set timeoutlen=130
+imap kj <Esc>
+
+map<F10> :w <CR> :!clear && g++ -std=c++17 -Wall -g % && gdb a.out<CR>
+autocmd vimEnter *.cpp map <F9> :w <CR> :!clear ; g++ --std=c++17 %; if [ -f a.out ]; then time ./a.out; rm a.out; fi <CR>

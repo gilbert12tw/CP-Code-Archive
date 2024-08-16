@@ -1,0 +1,8 @@
+Order 1 from: 2
+Order 2 from: 8
+Order 1 distance: 15
+No Way Home
+Order 2 distance: 20
+Order 3 from: 4
+Order 3 distance: 7
+Order 4 from: 3
