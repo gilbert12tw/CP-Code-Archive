@@ -38,7 +38,7 @@
 
 # Contest
 tmp/*
-testcases/*
+*/testcases/*
 
 # other repo
 # codebook/MakeCodeBook/*
