@@ -1,5 +1,0 @@
-Order 5 from: 1
-Order 3 from: 1
-Just walk. T-T
-Order 5 distance: 1
-Order 1 from: 4
