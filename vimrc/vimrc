@@ -1,0 +1,35 @@
+syntax on
+set ai
+set sts=4
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set autowrite
+set smartindent
+set mouse=a
+set showmode
+set showcmd
+set whichwrap+=<,>,[,]
+set timeoutlen=300
+set nu
+set rnu
+
+" Increase or decrease numbers"
+nnoremap + <C-a>
+nnoremap - <C-x>
+
+nnoremap L <C-w>l
+nnoremap H <C-w>h
+nnoremap J <C-w>j
+nnoremap K <C-w>k
+
+" au FileType cpp :r /Users/littlepants/CP/codebook/default.cpp<CR>
+nnoremap y<CR> ggvG$"*y
+nnoremap d<CR> :r /Users/littlepants/CP/codebook/default.cpp<CR>
+nnoremap c<CR> :r /Users/littlepants/CP/codebook/
+map<F12> :w <CR> :!clang-format -i %<CR>
+map<F9>  :w <CR> :!clear && python3 %<CR>
+inoremap kj <Esc>
+
+" Compile
+nnoremap <C-\> :w <CR> :!clear && g++-14 -std=c++17 -I. -I/Users/littlepants/Library/TestCaseLib -Ddebug -O2 -Wall -lm -g % && ./a.out<CR>
