@@ -1,4 +1,3 @@
-
 class Xbasis:
     def __init__(self):
         self.d = 64

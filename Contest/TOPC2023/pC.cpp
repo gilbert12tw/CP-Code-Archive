@@ -108,7 +108,3 @@ int main () {
  * hash collision
  * MOD in every step
 */
-
-
-
-

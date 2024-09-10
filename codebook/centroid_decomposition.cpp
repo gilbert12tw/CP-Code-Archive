@@ -45,6 +45,7 @@ struct CentroidTree {
   int build(int u = 1) {
     get_sz(u, -1);
     int centroid = get_centroid(u, sz[u], -1);
+    u = centroid;
     del[centroid] = 1;
     get_dis(centroid, -1, 0);
 

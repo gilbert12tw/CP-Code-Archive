@@ -3,7 +3,7 @@ struct Dijkstra {
     int n;
     vector<vector<pii>> g;
 
-    Dijkstra(int _n) : n(_n), g(_n) {}
+    Dijkstra(int _n) : n(_n + 1), g(_n + 1) {}
 
     void add_edge(int u, int v, int w) {
         g[u].eb(v, w);
