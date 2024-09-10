@@ -1,5 +1,6 @@
 # Prerequisites
 *.d
+*.txt
 
 # Compiled Object files
 *.slo
@@ -42,3 +43,6 @@ tmp/*
 
 # other repo
 # codebook/MakeCodeBook/*
+*/MakeCodeBook/*
+./MakeCodeBook/*/*
+*/MakeCodeBook/*/*
