@@ -16,9 +16,11 @@ signed main(){
     while(t--){
         cin>>n;
         for(int i=0;i<n;i++) cin>>b[i].f>>b[i].s;
+
         sort(b,b+n, [](int x, int y) {
             if (b[x].s == b[y].s) return 
         });
+
         map<int,bool> m;
         m[-1]=1;
         bool ans=1;

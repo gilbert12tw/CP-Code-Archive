@@ -53,37 +53,37 @@ int dp[11][1500];
 int mat[11][11];
 
 inline void solve() {
-  int n, m;
-  cin >> n >> m;
-  memset(dp, -0x3f, sizeof dp);
-  memset(mat, -0x3f, sizeof mat);
-  for (int i = 0; i < n; i++) dp[i][(1<<i)] = 0;
+    int n, m;
+    cin >> n >> m;
+    memset(dp, -0x3f, sizeof dp);
+    memset(mat, -0x3f, sizeof mat);
+    for (int i = 0; i < n; i++) dp[i][(1<<i)] = 0;
 
-  for (int i = 0; i < m; i++) {
-    int a, b, c;
-    cin >> a >> b >> c;
-    a--, b--;
-    mat[a][b] = max(mat[a][b], c);
-    mat[b][a] = max(mat[b][a], c);
-  }
-  
-  int ans = 0;
-  for (int i = 0; i < (1<<n); i++) {
-    for (int j = 0; j < n; j++) {
-      if (get_bit(i, j) == 0)
-        continue;
-      ans = max(ans, dp[j][i]);
-      for (int k = 0; k < n; k++) {
-        if (get_bit(i, k)) 
-          continue;
-        dp[k][i^(1<<k)] = max(dp[k][i^(1<<k)], dp[j][i] + mat[j][k]);
-      }
+    for (int i = 0; i < m; i++) {
+        int a, b, c;
+        cin >> a >> b >> c;
+        a--, b--;
+        mat[a][b] = max(mat[a][b], c);
+        mat[b][a] = max(mat[b][a], c);
     }
-  }
-  cout << ans;
+
+    int ans = 0;
+    for (int i = 0; i < (1<<n); i++) {
+        for (int j = 0; j < n; j++) {
+            if (get_bit(i, j) == 0)
+                continue;
+            ans = max(ans, dp[j][i]);
+            for (int k = 0; k < n; k++) {
+                if (get_bit(i, k)) 
+                    continue;
+                dp[k][i^(1<<k)] = max(dp[k][i^(1<<k)], dp[j][i] + mat[j][k]);
+            }
+        }
+    }
+    cout << ans;
 }
 
 signed main() {
-	IO;	
-	solve();	
+    IO;	
+    solve();	
 }
