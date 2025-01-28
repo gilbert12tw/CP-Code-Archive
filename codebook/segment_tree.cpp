@@ -6,7 +6,7 @@ struct Segment_Tree {
     vector<int> seg;
     Segment_Tree(int _n): n(_n), seg(_n * 4) {}
 
-    inline int op(int &a, int &b) {
+    inline int op(const int &a, const int &b) {
         return a + b;
     }
 
@@ -32,7 +32,7 @@ struct Segment_Tree {
         else modify(p, v, mid+1, r, rs);
         up(x);
     }
-    void modify(int p, int v) { modify(p, v, 1, n, 1); }
+    void modify(int p, int v) { modify(p, v, 0, n, 1); }
 
     int query(int a, int b, int l, int r, int x) {
         if(a <= l and r <= b) return seg[x];
@@ -41,5 +41,5 @@ struct Segment_Tree {
         if(b > mid) res = op(res, query(a, b, mid+1, r, rs));
         return res;
     }
-    void query(int a, int b) { query(a, b, 1, n , 1); }
+    int query(int a, int b) { return query(a, b, 0, n , 1); }
 };
