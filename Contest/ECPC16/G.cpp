@@ -3,8 +3,10 @@ using namespace std;
 typedef long long ll;
 #define int ll
 #define pii pair<int, int>
-#define f first
-#define s second
+#define X first
+#define Y second
+#define F first
+#define S second
 #define vi vector<int>
 #define SZ(a) ((int)a.size())
 #define ALL(v) v.begin(), v.end()
@@ -35,11 +37,41 @@ template <typename T, typename ...U> void abc(T a, U ...b) {
 template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
-inline void solve() {
+const int mxN = 1e3 + 5, mxM = 1e6 + 5;
 
+int dp[mxN][mxN], J[mxM];
+
+
+inline void setIO(string name) {
+    ios_base::sync_with_stdio(0); cin.tie(0);
+    freopen((name+".in").c_str(),"r",stdin);
+}
+
+inline void solve() {
+    int n, m;
+    cin >> n >> m;
+    if (m > n) {
+        cout << 0 << '\n';
+        return;
+    }
+    cout << dp[n][m] * J[m] % mod << '\n';
 }
 
 signed main() {
-	IO;	
-	solve();	
+	setIO("galactic");	
+
+    J[0] = 1;
+    for (int i = 1; i <= 1000000; i++) {
+        J[i] = J[i-1] * i % mod;
+    }
+
+    dp[0][0] = 1;
+    for (int i = 1; i <= 1000; i++) {
+        for (int j = 1; j <= 1000; j++) {
+            dp[i][j] = (dp[i-1][j-1] + j * dp[i-1][j] % mod) % mod;
+        }
+    }
+
+    int T; cin >> T;
+	while (T--) solve();	
 }

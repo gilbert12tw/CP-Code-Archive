@@ -36,7 +36,18 @@ template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
 inline void solve() {
-
+    string s;
+    cin >> s;
+    vector<int> v;
+    for (int i = 0; i < SZ(s); i++) {
+        if (s[i] == '#') {
+            v.eb(i + 1);
+        }
+        if (SZ(v) == 2) {
+            cout << v[0] << "," << v[1] << '\n';
+            v.clear();
+        }
+    }
 }
 
 signed main() {

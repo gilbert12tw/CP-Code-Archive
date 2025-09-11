@@ -35,8 +35,31 @@ template <typename T, typename ...U> void abc(T a, U ...b) {
 template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
-inline void solve() {
+bitset<3000> b[26][3001];
 
+inline void solve() {
+    int n, k;
+    cin >> n >> k;
+    for (int i = 0; i < n; i++) {
+        string s;
+        cin >> s;
+        for (int j = 0; j < n; j++) {
+            b[s[j] - 'A'][i].set(j);
+        }
+    }
+
+    vector<int> ans(k);
+    for (int c = 0; c < k; c++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                int cnt = (b[c][i] & b[c][j]).count();
+                test(cnt);
+                ans[c] += (cnt * (cnt - 1) / 2);
+            }
+        }
+    }
+
+    for (int i : ans) cout << i << '\n';
 }
 
 signed main() {

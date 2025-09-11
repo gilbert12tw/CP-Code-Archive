@@ -36,7 +36,43 @@ template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
 inline void solve() {
+    int n; cin >> n;
 
+    vector<string> b(11, string(n, '0'));
+    
+    auto dfs = [&](int dep, int l, int r, auto&& dfs) -> int {
+        if (r <= l) return dep;
+        int mid = (l + r) >> 1;
+        for (int i = l; i <= mid; i++) b[dep][i] = '0';
+        for (int i = mid+1; i <= r; i++) b[dep][i] = '1';
+        int res = dfs(dep + 1, l, mid, dfs);
+        res = max(res, dfs(dep + 1, mid + 1, r, dfs));
+        return res;
+    };
+
+    int mx_dep = dfs(0, 0, n - 1, dfs);
+
+    vector<string> ans;
+    for (int i = 0; i < mx_dep; i++) {
+        cout << "? " << b[i] << endl;
+        string tmp;
+        cin >> tmp;
+        ans.eb(tmp);
+    }
+
+    vector<string> ord(n);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < mx_dep; j++) {
+            ord[i].pb(ans[j][i]);
+        }
+    }
+    auto dic = ord;
+    sort(ALL(dic));
+
+    cout << "! ";
+    for (int i = 0; i < n; i++) {
+        cout << (lower_bound(ALL(dic), ord[i]) - dic.begin()) + 1 << ' ';
+    }
 }
 
 signed main() {

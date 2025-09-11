@@ -36,10 +36,30 @@ template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
 inline void solve() {
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
 
+    s = "0" + s;
+
+    vector<int> dp((1<<n));
+
+    dp[0] = 1;
+    for (int i = 1; i < (1<<n); i++) {
+        if (s[i] == '1') continue;
+        for (int j = 0; j < n; j++) {
+            if (get_bit(i, j)) {
+                dp[i] |= (dp[i ^ (1<<j)]);
+            }
+        }
+    }
+    
+    cout << (dp.back() ? "Yes" : "No") << '\n';
 }
 
 signed main() {
 	IO;	
-	solve();	
+    int T; cin >> T;
+	while (T--) solve();	
 }

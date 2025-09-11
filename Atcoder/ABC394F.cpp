@@ -3,8 +3,10 @@ using namespace std;
 typedef long long ll;
 #define int ll
 #define pii pair<int, int>
-#define f first
-#define s second
+#define X first
+#define Y second
+#define F first
+#define S second
 #define vi vector<int>
 #define SZ(a) ((int)a.size())
 #define ALL(v) v.begin(), v.end()
@@ -36,7 +38,40 @@ template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
 inline void solve() {
+    int n;
+    cin >> n;
+    vector<vector<int>> G(n + 1);
+    vector<int> dp(n + 1, 1);
+    for (int i = 0; i < n - 1; i++) {
+        int a, b;
+        cin >> a >> b;
+        G[a].eb(b);
+        G[b].eb(a);
+    }
 
+    int ans = 0;
+    auto dfs = [&](auto &&self, int u, int p) -> void {
+        vector<int> mx;
+        for (int v : G[u]) {
+            if (v == p) continue;
+            self(self, v, u);
+            mx.eb(dp[v]);
+        }
+        sort(ALL(mx));
+        reverse(ALL(mx));
+        if (SZ(mx) >= 3) {
+            dp[u] = 1 + mx[0] + mx[1] + mx[2];
+        }
+        if (SZ(mx) >= 4) {
+            ans = max(ans, 1 + mx[0] + mx[1] + mx[2] + mx[3]);
+        }
+        if (SZ(mx) >= 1) {
+            ans = max(ans, 1 + mx[0]);
+        }
+    };
+    dfs(dfs, 1, 0);
+    if (ans < 5) ans = -1;
+    cout << ans << '\n';
 }
 
 signed main() {

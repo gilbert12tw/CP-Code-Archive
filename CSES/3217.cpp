@@ -35,8 +35,30 @@ template <typename T, typename ...U> void abc(T a, U ...b) {
 template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
-inline void solve() {
+const int dx[] = {1, 1, 2, 2, -1, -1, -2, -2};
+const int dy[] = {2, -2, 1, -1, 2, -2, 1, -1};
 
+inline void solve() {
+    int n; cin >> n;
+
+    queue<pii> q;
+    q.push(0, 0); 
+    vector<vi> mat(n, vi(n, -1));
+    mat[0][0] = 0;
+    while (!q.empty()) {
+        auto [x, y] = q.front(); q.pop();
+        for (int d = 0; d < 8; d++) {
+            int nx = x + dx[d], ny = y + dy[d];
+            if (nx >= 0 && nx < n && ny >= 0 && ny < n && mat[nx][ny] == -1) {
+                q.push(mkp(nx, ny));
+                mat[nx][ny] = mat[x][y] + 1;
+            }
+        }
+    }
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) cout << mat[i][j] << ' ';
+        cout << '\n';
+    }
 }
 
 signed main() {

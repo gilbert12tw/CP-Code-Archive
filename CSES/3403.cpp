@@ -36,7 +36,35 @@ template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
 inline void solve() {
+    int n, m;
+    cin >> n >> m;
+    vector<int> a(n), b(m);
+    for (int &i : a) cin >> i;
+    for (int &i : b) cin >> i;
 
+    vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            if (a[i-1] == b[j-1]) dp[i][j] = dp[i-1][j-1] + 1;
+            dp[i][j] = max({dp[i][j], dp[i-1][j], dp[i][j-1]});
+        }
+    }
+    cout << dp[n][m] << '\n';
+
+    int x = n, y = m;
+    vector<int> ans;
+    while (x != 0 || y != 0) {
+        if (x >= 1 && y >= 1 && dp[x][y] == dp[x-1][y-1] + 1 && a[x-1] == b[y-1]) {
+            ans.eb(a[x-1]);
+            x--; y--;
+        } else if (x >= 1 && dp[x][y] == dp[x-1][y]) {
+            x--;
+        } else if (y >= 1) {
+            y--;
+        }
+    }
+    reverse(ALL(ans));
+    for (int i : ans) cout << i << ' ';
 }
 
 signed main() {

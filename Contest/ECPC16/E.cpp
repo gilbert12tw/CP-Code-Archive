@@ -3,8 +3,10 @@ using namespace std;
 typedef long long ll;
 #define int ll
 #define pii pair<int, int>
-#define f first
-#define s second
+#define X first
+#define Y second
+#define F first
+#define S second
 #define vi vector<int>
 #define SZ(a) ((int)a.size())
 #define ALL(v) v.begin(), v.end()
@@ -35,11 +37,45 @@ template <typename T, typename ...U> void abc(T a, U ...b) {
 template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
-inline void solve() {
+inline void setIO(string name) {
+    ios_base::sync_with_stdio(0); cin.tie(0);
+    freopen((name+".in").c_str(),"r",stdin);
+}
 
+inline void solve() {
+    int n; cin >> n;
+    vector<int> d(n + 1);
+    vector<vector<int>> G(n + 1);
+    for (int i = 1; i <= n; i++) {
+        cin >> d[i];
+        if (i - d[i] >= 1) G[i - d[i]].eb(i);
+        if (i + d[i] <= n) G[i + d[i]].eb(i);
+    }
+
+
+    auto bfs = [&](int st) {
+        queue<int> q;
+        vector<int> dis(n + 1, -1);
+        q.push(st);
+        dis[st] = 0;
+
+        while (!q.empty()) {
+            int u = q.front(); q.pop();
+            for (int v : G[u]) {
+                if (dis[v] == -1) {
+                    dis[v] = dis[u] + 1;
+                    q.push(v);
+                }
+            }
+        }
+        for (int i = 1; i <= n; i++) cout << dis[i] << '\n';
+    };
+
+    bfs(n);
 }
 
 signed main() {
-	IO;	
-	solve();	
+	setIO("jumping");	
+    int T; cin >> T;
+	while (T--) solve();	
 }

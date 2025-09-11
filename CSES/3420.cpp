@@ -36,7 +36,24 @@ template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
 inline void solve() {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    for (int &i : a) cin >> i;
 
+    int i = 0, j = 0;
+    int ans = 0;
+    map<int, int> mp;
+    for (; i < n; i++) {
+        while (j < n && mp[a[j]] == 0) {
+            mp[a[j]]++;
+            j++;
+        }
+        ans += (j - i);
+        test(i, j);
+        mp[a[i]]--;
+    }
+    cout << ans << '\n';
 }
 
 signed main() {

@@ -3,8 +3,10 @@ using namespace std;
 typedef long long ll;
 #define int ll
 #define pii pair<int, int>
-#define f first
-#define s second
+#define X first
+#define Y second
+#define F first
+#define S second
 #define vi vector<int>
 #define SZ(a) ((int)a.size())
 #define ALL(v) v.begin(), v.end()
@@ -36,7 +38,17 @@ template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
 inline void solve() {
-
+    int n; cin >> n;
+    vector<int> a(n);
+    for (int &i : a) cin >> i;
+    bool ok = 0;
+    for (int i = 0; i < n - 2; i++) {
+        if (a[i] == a[i+1] && a[i+1] == a[i+2]) {
+            ok = 1;
+        }
+    }
+    if (ok) cout << "Yes\n";
+    else cout << "No\n";
 }
 
 signed main() {

@@ -1,7 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
 typedef long long ll;
-#define int ll
 #define pii pair<int, int>
 #define f first
 #define s second
@@ -35,8 +34,38 @@ template <typename T, typename ...U> void abc(T a, U ...b) {
 template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
-inline void solve() {
+int n, k;
+bitset<3000> cnt[3001];
+char mat[3001][3001];
+vector<int> col[26][3001];
 
+inline bool check(int c) {
+    for (int i = 0; i < n; i++) cnt[i] = 0;
+    for (int i = 0; i < n; i++) {
+        int m = SZ(col[c][i]);
+        for (int j = 0; j < m; j++) {
+            for (int k = 0; k < j; k++) {
+                if (cnt[col[c][i][k]][col[c][i][j]]) return true;
+                cnt[col[c][i][k]][col[c][i][j]] = 1;
+            }
+        }
+    }
+    return false;
+}
+
+inline void solve() {
+    cin >> n >> k;
+    vector<int> cntAlpha(30);
+    for (int i = 0; i < n; i++) {
+        cin >> mat[i];
+        for (int j = 0; j < n; j++) {
+            col[(mat[i][j] - 'A')][i].eb(j);
+        }
+    }
+
+    for (int i = 0; i < k; i++) {
+        cout << (check(i) ? "YES" : "NO") << '\n';
+    }
 }
 
 signed main() {

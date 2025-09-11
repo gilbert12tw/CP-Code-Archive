@@ -36,6 +36,27 @@ template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
 inline void solve() {
+    int n, m;
+    cin >> n >> m;
+    vector<string> mat(n);
+    for (int i = 0; i < n; i++) cin >> mat[i];
+
+    auto era = [](set<char> &st, char c) -> void {
+        if (st.find(c) != st.end())
+            st.erase(c);
+    };
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            set<char> st = {'A', 'B', 'C', 'D'};
+            if (i != 0) era(st, mat[i-1][j]);
+            if (j != 0) era(st, mat[i][j-1]);
+            era(st, mat[i][j]);
+            mat[i][j] = *st.begin();
+
+        }
+        cout << mat[i] << '\n';
+    }
 
 }
 

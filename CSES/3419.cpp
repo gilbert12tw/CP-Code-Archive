@@ -36,7 +36,30 @@ template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
 inline void solve() {
-
+    int n; cin >> n;
+    vector<vector<int>> mat(n, vector<int>(n));
+    auto fill_up = [&](int x, int y) {
+        map<int, int> mex;
+        for (int i = 0; i < x; i++) {
+            mex[mat[i][y]] = 1;
+        }
+        for (int i = 0; i < y; i++) {
+            mex[mat[x][i]] = 1;
+        }
+        for (int i = 0; ; i++) if (!mex[i]) return i;
+    };
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (i == 0) mat[i][j] = j;
+            else if (j == 0) mat[i][j] = i;
+            else mat[i][j] = fill_up(i, j);
+        }
+    }
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++)
+            cout << mat[i][j] << ' ';
+        cout << '\n';
+    }
 }
 
 signed main() {

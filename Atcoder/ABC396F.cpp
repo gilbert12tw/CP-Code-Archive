@@ -3,8 +3,10 @@ using namespace std;
 typedef long long ll;
 #define int ll
 #define pii pair<int, int>
-#define f first
-#define s second
+#define X first
+#define Y second
+#define F first
+#define S second
 #define vi vector<int>
 #define SZ(a) ((int)a.size())
 #define ALL(v) v.begin(), v.end()
@@ -35,8 +37,48 @@ template <typename T, typename ...U> void abc(T a, U ...b) {
 template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
-inline void solve() {
+struct BIT {
+    vector<int> b;
+    int n;
+    BIT(int _n): b(_n + 2), n(_n + 1) {}
+	int qry(int i) {
+        i++;
+		int res = 0;
+		for (; i > 0; i -= (i&-i)) res += b[i];
+		return res;
+	}
+	void upd(int i, int v) {
+        i++;
+		for (; i <= n; i += (i&-i)) b[i] += v; 
+	}
+};
 
+inline void solve() {
+    int n, m; cin >> n >> m;
+    vector<int> a(n);
+    for (int &i : a) cin >> i;
+
+    BIT bit(m);
+    int inv_cnt = 0;
+    map<int, vector<int>> mp;
+    for (int i = 0; i < n; i++) {
+        inv_cnt += bit.qry(m) - bit.qry(a[i]);
+        bit.upd(a[i], 1);
+        mp[a[i]].eb(i);
+    }
+
+    cout << inv_cnt << '\n';
+    for (int i = m - 1; i >= 1; i--) {
+        int sz = mp[i].size();
+        int delta = 0, pre = 0;
+        for (int j : mp[i]) {
+            delta += (j - pre);
+            delta -= (n - j - 1 - (sz - pre - 1));
+            pre++;
+        }
+        inv_cnt += delta;
+        cout << inv_cnt << '\n';
+    }
 }
 
 signed main() {

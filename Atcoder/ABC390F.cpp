@@ -48,21 +48,23 @@ template <typename T> ostream& operator << (ostream& o, vector<T> a) {
 #define test(args...) void(0)
 #endif
 
-const int mxN = 2e6 + 5;
+const int mxN = 3e5 + 5;
 
 inline void solve() {
-    int n, m; 
-    cin >> n >> m;
-    int ans = INF;
-    for (int i = 1; i <= n; i++) {
-        int a = i; 
-        int b = m / i;
-        while (a * b < m) b++;
-        if (a <= n && b <= n) ans = min(ans, a * b);
-        if (a > b) break;
+    int n; cin >> n;
+    vector<int> a(n);
+    for (int &i : a) cin >> i;
+
+    vector<int> lst[3], nxt[3];
+    for (int i = 0; i < 3; i++) {
+        lst[i].resize(n);
+        nxt[i].resize(n);
     }
-    if (ans == INF) ans = -1;
-    cout << ans << '\n';
+
+    int ans = n * (n + 1) / 2;
+    for (int i = 0; i < n; i++) {
+    }
+
 }
 
 signed main() {

@@ -35,7 +35,33 @@ template <typename T, typename ...U> void abc(T a, U ...b) {
 template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
+const int THRES = 10000;
+bitset<THRES> mat[100001];
+
+
+
 inline void solve() {
+    int n, q; 
+    cin >> n >> q;
+
+    int last_ans = 0;
+    while (q--) {
+        int a, b, c;
+        int o, u, v;
+        cin >> a >> b >> c;
+        o = 1 + (a * (1 + last_ans) % MOD) % 2;
+        u = 1 + (b * (1 + last_ans) % MOD) % n;
+        v = 1 + (c * (1 + last_ans) % MOD) % n;
+
+        if (o == 1) {
+            mat[u][v] = mat[v][u] = 1;
+        } else {
+            int ans = (mat[u] & mat[v])._Find_first();
+            if (ans == -1 || ans > n) ans = 0;
+            cout << ans << '\n';
+            last_ans = ans;
+        }
+    }
 
 }
 

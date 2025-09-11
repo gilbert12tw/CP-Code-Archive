@@ -3,8 +3,8 @@ using namespace std;
 typedef long long ll;
 #define int ll
 #define pii pair<int, int>
-#define f first
-#define s second
+#define fi first
+#define se second
 #define vi vector<int>
 #define SZ(a) ((int)a.size())
 #define ALL(v) v.begin(), v.end()
@@ -36,7 +36,29 @@ template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
 inline void solve() {
+    int n, m;
+    cin >> n >> m;
+    vector<pii> p(m);
+    for (int i = 0; i < m; i++) {
+        cin >> p[i].fi >> p[i].se;
+    }
+    sort(ALL(p), [](pii a, pii b) {
+        return a.fi - a.se < b.fi - b.se;
+    });
 
+    int ptr = 0, stickers = 0;
+    while (ptr < m) {
+        if (n >= p[ptr].fi) {
+            int a = p[ptr].fi;
+            int b = p[ptr].se;
+            int delta = a -b;
+            int cnt = (n - a + delta) / delta;
+            stickers += cnt;
+            n = n - cnt * delta;
+        }
+        ptr++;
+    }
+    cout << stickers << '\n';
 }
 
 signed main() {
