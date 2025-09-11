@@ -42,7 +42,3 @@ tmp/*
 */testcases/*
 
 # other repo
-# codebook/MakeCodeBook/*
-*/MakeCodeBook/*
-./MakeCodeBook/*/*
-*/MakeCodeBook/*/*
