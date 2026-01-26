@@ -22,12 +22,12 @@ typedef long long ll;
 #define get_bit(x, y) ((x>>y)&1)
 #define mkp make_pair
 #define IO ios_base::sync_with_stdio(0); cin.tie(0);
-template <typename... T> void _print(T... args) {
-    ((cerr << args << ' '), ...);
-    cerr << '\n';
+void abc() {cerr << endl;}
+template <typename T, typename ...U> void abc(T a, U ...b) {
+    cerr << a << ' ', abc(b...);
 }
 #ifdef debug
-#define test(args...) _print("[" + string(#args) + "]:", args)
+#define test(args...) abc("[" + string(#args) + "]", args)
 #else
 #define test(args...) void(0)
 #endif
@@ -35,10 +35,38 @@ template <typename... T> void _print(T... args) {
 template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
+int T, M;
+int C[5001][5001];
+
 inline void solve() {
+    int n;
+    cin >> n;
+    vector<int> c(n);
+    int ans = 1, sum = 0;
+    for (int &i : c) { 
+        cin >> i;
+        sum += i;
+    }
+    for (int i : c) {
+        ans = (ans * C[sum][i]) % M;
+        sum -= i;
+    }
+    cout << ans << '\n';
 }
 
 signed main() {
 	IO;	
-	solve();	
+    cin >> T >> M;
+    
+    int n = 5000;
+    C[0][0] = 1;
+    for (int i = 1; i <= n; i++) {
+        C[i][0] = 1;
+        for (int j = 1; j <= n; j++) {
+            C[i][j] = (C[i-1][j] + C[i-1][j-1]);
+            if (C[i][j] >= M) C[i][j] -= M;
+        }
+    }
+
+	while (T--) solve();	
 }

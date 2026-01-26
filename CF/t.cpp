@@ -22,12 +22,12 @@ typedef long long ll;
 #define get_bit(x, y) ((x>>y)&1)
 #define mkp make_pair
 #define IO ios_base::sync_with_stdio(0); cin.tie(0);
-template <typename... T> void _print(T... args) {
-    ((cerr << args << ' '), ...);
+template <typename... T> void dprint(T... args) {
+    (..., (cerr << args << ' '));
     cerr << '\n';
 }
 #ifdef debug
-#define test(args...) _print("[" + string(#args) + "]:", args)
+#define test(args...) dprint("[" + string(#args) + "]:", args)
 #else
 #define test(args...) void(0)
 #endif
@@ -36,6 +36,9 @@ template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
 inline void solve() {
+    test(1, 2, 3);
+    auto ptr = make_unique<int>(10);
+    test(*ptr);
 }
 
 signed main() {

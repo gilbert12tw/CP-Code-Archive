@@ -36,6 +36,27 @@ template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
 inline void solve() {
+    int n; string s;
+    cin >> n >> s;
+    unordered_map<int, int> mp;
+    int cur_sum = 0;
+    int pre = 0;
+    mp[cur_sum]++;
+
+    int ans = 0;
+    for (int i = 0; i < n; i++) {
+        if (s[i] == 'A') { 
+            pre += mp[cur_sum];
+            cur_sum++;
+        }
+        if (s[i] == 'B') {
+            cur_sum--;
+            pre -= mp[cur_sum];
+        }
+        mp[cur_sum]++;
+        ans += pre;
+    }
+    cout << ans << '\n';
 }
 
 signed main() {

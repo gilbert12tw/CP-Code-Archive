@@ -1,55 +1,66 @@
-struct PT {
-    int x,y;
-    PT(){}
-    PT(const int&x,const int&y):x(x),y(y){}
-    PT operator+(const PT &b)const{
-        return PT(x+b.x,y+b.y);
-    }
-    PT operator-(const PT &b)const{
-        return PT(x-b.x,y-b.y);
-    }
-    PT operator*(const int &b)const{
-        return PT(x*b,y*b);
-    }
-    PT operator/(const int &b)const{
-        return PT(x/b,y/b);
-    }
-    bool operator==(const PT &b)const{
-        return x==b.x&&y==b.y;
-    }
-    int dot(const PT &b)const{
-        return x*b.x+y*b.y;
-    }
-    int cross(const PT &b)const{
-        return x*b.y-y*b.x;
-    }
-    int abs2()const{//向量長度的平方
-        return dot(*this);
-    }
+typedef pair<double, double> pdd;
+typedef pair<long long, long long> pll;
+typedef pair<pdd, pdd> Line;
+struct Cir {
+    pdd O;
+    double R;
 };
-
-// p2 in p1 -> p3
-int btw(const PT &p1, const PT &p2, const PT &p3) {
-    if ((p1 - p2).cross(p3 - p2) == 0 &&
-            min(p1.x, p3.x) <= p2.x && p2.x <= max(p1.x, p3.x) &&
-            min(p1.y, p3.y) <= p2.y && p2.y <= max(p1.y, p3.y)) return 1;
-    return 0;
+const double eps = 1e-8;
+pdd operator+(pdd a, pdd b){return pdd(a.X + b.X, a.Y + b.Y);}
+pdd operator-(pdd a, pdd b){return pdd(a.X - b.X, a.Y - b.Y);}
+pdd operator*(pdd a, double b){return pdd(a.X * b, a.Y * b);}
+pdd operator/(pdd a, double b) {return pdd(a.X / b, a.Y / b);}
+double dot(pdd a, pdd b) {
+    return a.X * b.X + a.Y * b.Y;
 }
-
-int sgn(int x) {
-    if (x > 0) return 1;
-    else if (x == 0) return 0;
-    return -1;
+double cross(pdd a, pdd b) {
+    return a.X * b.Y - a.Y * b.X;
 }
-
-int inter(const PT &a, const PT &b, const PT &c, const PT &d) {
-    if(min(a.y, b.y) <= max(c.y, d.y) and min(c.y, d.y) <= max(a.y, b.y) and
-            min(a.x, b.x) <= max(c.x, d.x) and min(c.x, d.x) <= max(a.x, b.x) and
-            sgn((b - a).cross(c - a)) * sgn((b - a).cross(d - a)) <= 0 and
-            sgn((d - c).cross(a - c)) * sgn((d - c).cross(b - c)) <= 0) return 1;
-    return 0;
+double abs2(pdd a) {
+    return dot(a, a);
 }
-
-int area(const PT &a, const PT &b, const PT &c) {
-    return abs((a-b).cross(c-b));
+double abs(pdd a) {
+    return sqrt(dot(a, a));
 }
+int sign(double a) {
+    return fabs(a) < eps ? 0 : a > 0 ? 1 : -1;
+}
+int ori(pdd a, pdd b, pdd c) {
+    return sign(cross(b - a, c - a));
+}
+bool collinearity(pdd p1, pdd p2, pdd p3) {
+    return sign(cross(p1 - p3, p2 - p3)) == 0;
+}
+bool btw(pdd p1, pdd p2, pdd p3) {
+    if (!collinearity(p1, p2, p3))
+        return 0;
+    return sign(dot(p1 - p3, p2 - p3)) <= 0;
+}
+bool seg_intersect(pdd p1, pdd p2, pdd p3, pdd p4) {
+    int a123 = ori(p1, p2, p3);
+    int a124 = ori(p1, p2, p4);
+    int a341 = ori(p3, p4, p1);
+    int a342 = ori(p3, p4, p2);
+    if (a123 == 0 && a124 == 0)
+        return btw(p1, p2, p3) || btw(p1, p2, p4) ||
+               btw(p3, p4, p1) || btw(p3, p4, p2);
+    return a123 * a124 <= 0 && a341 * a342 <= 0;
+}
+pdd intersect(pdd p1, pdd p2, pdd p3, pdd p4) {
+    double a123 = cross(p2 - p1, p3 - p1);
+    double a124 = cross(p2 - p1, p4 - p1);
+    return (p4 * a123 - p3 * a124) / (a123 - a124);
+}
+pdd perp(pdd p1) {
+    return pdd(-p1.Y, p1.X);
+}
+pdd projection(pdd p1, pdd p2, pdd p3) {
+    return p1 + (p2 - p1) * dot(p3 - p1, p2 - p1) / abs2(p2 - p1);
+}
+pdd reflection(pdd p1, pdd p2, pdd p3) {
+    return p3 + perp(p2 - p1) * cross(p3 - p1, p2 - p1) / abs2(p2 - p1) * 2;
+}
+pdd linearTransformation(pdd p0, pdd p1, pdd q0, pdd q1, pdd r) {
+    pdd dp = p1 - p0, dq = q1 - q0, num(cross(dp, dq), dot(dp, dq));
+    return q0 + pdd(cross(r - p0, num), dot(r - p0, num)) / abs2(dp);
+} // from line p0--p1 to q0--q1, apply to r

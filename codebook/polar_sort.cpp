@@ -1,11 +1,14 @@
-int sgn(point a) {
-	if (a.X >= 0 and a.Y >= 0) return 1;
-	if (a.X <= 0 and a.Y >= 0) return 2;
-	if (a.X <= 0 and a.Y <= 0) return 3;
-	return 4;
+ll cross(const point &a, const point &b) {
+    return a.x * b.y - a.y * b.x;
 }
 
-bool cmp(point a, point b) {
-	if (sgn(a) == sgn(b)) return cross(a - o, b - o) >= 0;
-	return sgn(a) < sgn(b);
+inline int get_region(const point &p) {
+    if (p.x > 0 || (p.x == 0 && p.y > 0)) return 0;
+    return 1;
+}
+
+bool cmp(const point &a, const point &b) {
+    int ra = get_region(a), rb = get_region(b);
+    if (ra != rb) return ra < rb;
+    return cross(a, b) < 0; // clockwise
 }

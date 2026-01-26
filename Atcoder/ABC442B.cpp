@@ -36,6 +36,19 @@ template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
 inline void solve() {
+    int q; cin >> q;
+    int play = 0, vol = 0;
+    for (int i = 0; i < q; i++) {
+        int a; cin >> a;
+        if (a == 1) vol++;
+        if (a == 2) vol = max(0ll, vol - 1);
+        if (a == 3) play ^= 1;
+        if (play && vol >= 3) {
+            cout << "Yes\n";
+        } else {
+            cout << "No\n";
+        }
+    }
 }
 
 signed main() {

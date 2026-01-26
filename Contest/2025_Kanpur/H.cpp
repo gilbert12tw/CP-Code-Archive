@@ -36,9 +36,27 @@ template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
 inline void solve() {
+    int n; cin >> n;
+    vector<int> a(n);
+    for (int &i : a) cin >> i;
+
+    if (n == 1) {
+        cout << "Alice\n";
+        return;
+    }
+    
+    int ans = a[n-1];
+    for (int i = 0; i + 1 < n; i++) {
+        ans ^= (a[i] - a[i+1]);
+    }
+    cout << ans << '\n';
+    if (ans) cout << "Alice\n";
+    else cout << "Bob\n";
 }
 
 signed main() {
 	IO;	
-	solve();	
+    int T = 1; 
+    cin >> T;
+	while (T--) solve();	
 }

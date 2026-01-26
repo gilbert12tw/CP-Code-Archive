@@ -40,5 +40,7 @@ inline void solve() {
 
 signed main() {
 	IO;	
-	solve();	
+    int T = 1; 
+    cin >> T;
+	while (T--) solve();	
 }

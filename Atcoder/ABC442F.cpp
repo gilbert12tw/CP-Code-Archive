@@ -36,6 +36,37 @@ template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
 inline void solve() {
+    int n; 
+    cin >> n;
+    vector<string> mat(n);
+    for (int i = 0; i < n; i++) {
+        cin >> mat[i];
+        mat[i] = 'x' + mat[i];
+    }
+    
+    vector<int> dp_p(n + 1, inf), dp_n(n + 1);
+    for (int i = 0; i < n; i++) {
+        vector<int> cost(n + 1);
+        int sum = 0;
+        for (int j = 0; j <= n; j++) {
+            sum = sum + (mat[i][j] == '#');
+            cost[j] += sum;
+        }
+        sum = 0;
+        for (int j = n; j >= 0; j--) {
+            cost[j] += sum;
+            sum = sum + (mat[i][j] == '.');
+        }
+
+        int mn = inf;
+        if (i == 0) mn = 0;
+        for (int j = n; j >= 0; j--) {
+            mn = min(dp_p[j], mn);
+            dp_n[j] = mn + cost[j];
+        }
+        swap(dp_n, dp_p);
+    }
+    cout << *min_element(ALL(dp_p)) << '\n';
 }
 
 signed main() {

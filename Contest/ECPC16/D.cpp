@@ -37,7 +37,6 @@ template <typename T, typename ...U> void abc(T a, U ...b) {
 template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
-
 inline void setIO(string name) {
     ios_base::sync_with_stdio(0); cin.tie(0);
     freopen((name+".in").c_str(),"r",stdin);

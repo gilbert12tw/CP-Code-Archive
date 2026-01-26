@@ -22,12 +22,12 @@ typedef long long ll;
 #define get_bit(x, y) ((x>>y)&1)
 #define mkp make_pair
 #define IO ios_base::sync_with_stdio(0); cin.tie(0);
-template <typename... T> void _print(T... args) {
-    ((cerr << args << ' '), ...);
-    cerr << '\n';
+void abc() {cerr << endl;}
+template <typename T, typename ...U> void abc(T a, U ...b) {
+    cerr << a << ' ', abc(b...);
 }
 #ifdef debug
-#define test(args...) _print("[" + string(#args) + "]:", args)
+#define test(args...) abc("[" + string(#args) + "]", args)
 #else
 #define test(args...) void(0)
 #endif
@@ -36,6 +36,17 @@ template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
 inline void solve() {
+    int n;
+    cin >> n;
+    int ans = 0;
+    for (int i = 1; i <= n; i++) {
+        if (i % 2) {
+            ans -= i * i * i;
+        } else {
+            ans += i * i * i;
+        }
+    }
+    cout << ans << '\n';
 }
 
 signed main() {

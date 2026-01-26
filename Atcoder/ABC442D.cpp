@@ -36,6 +36,26 @@ template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
 inline void solve() {
+    int n, q;
+    cin >> n >> q;
+    vector<int> a(n + 1), sum(n + 1);
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+        sum[i] = sum[i-1] + a[i];
+    }
+
+    for (int i = 0; i < q; i++) {
+        int o, l, r;
+        cin >> o;
+        if (o == 1) {
+            cin >> l;
+            sum[l] += (a[l+1] - a[l]);
+            swap(a[l], a[l+1]);
+        } else {
+            cin >> l >> r;
+            cout << sum[r] - sum[l-1] << '\n';
+        }
+    }
 }
 
 signed main() {

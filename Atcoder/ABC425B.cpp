@@ -22,12 +22,12 @@ typedef long long ll;
 #define get_bit(x, y) ((x>>y)&1)
 #define mkp make_pair
 #define IO ios_base::sync_with_stdio(0); cin.tie(0);
-template <typename... T> void _print(T... args) {
-    ((cerr << args << ' '), ...);
-    cerr << '\n';
+void abc() {cerr << endl;}
+template <typename T, typename ...U> void abc(T a, U ...b) {
+    cerr << a << ' ', abc(b...);
 }
 #ifdef debug
-#define test(args...) _print("[" + string(#args) + "]:", args)
+#define test(args...) abc("[" + string(#args) + "]", args)
 #else
 #define test(args...) void(0)
 #endif
@@ -36,6 +36,31 @@ template<class T> bool ckmin(T& a, const T& b) { return b<a ? a=b, 1 : 0; }
 template<class T> bool ckmax(T& a, const T& b) { return a<b ? a=b, 1 : 0; }
 
 inline void solve() {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    for (int &i : a) cin >> i;
+
+    vector<int> ord(n);
+    iota(ALL(ord), 1);
+    do {
+        int ok = 1;
+        for (int i = 0; i < n; i++) {
+            if (a[i] == -1) continue;
+            if (a[i] != ord[i]) { 
+                ok = 0;
+                break;
+            }
+        }
+        if (ok) {
+            cout << "Yes\n";
+            for (int i : ord) {
+                cout << i << ' ';
+            }
+            return;
+        }
+    } while (next_permutation(ALL(ord)));
+    cout << "No\n";
 }
 
 signed main() {
